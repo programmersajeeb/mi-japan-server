@@ -23,20 +23,21 @@ async function run() {
         const slideCollection = database.collection('slides');
         const productsCollection = database.collection('products');
         const announcementCollection = database.collection('announcements');
+        const reportCollection = database.collection('reports');
 
-        // GET API
+        // SLIDES GET API
         app.get('/slides', async (req, res) => {
             const cursor = slideCollection.find({});
             const slides = await cursor.toArray();
             res.send(slides);
         });
-        //POST API
+        // SLIDES POST API
         app.post('/slides', async (req, res) => {
             const newSlides = req.body;
             const result = await slideCollection.insertOne(newSlides);
             res.json(result);
         });
-        // DELETE API
+        // SLIDES DELETE API
         app.delete('/slides/:id', async (req, res) => {
             const id = req.params.id;
             const query = {
@@ -46,13 +47,13 @@ async function run() {
             res.json(result);
         })
 
-        // GET API
+        // PRODUCTS GET API
         app.get('/products', async (req, res) => {
             const cursor = productsCollection.find({});
             const products = await cursor.toArray();
             res.send(products);
         });
-        // GET SINGEL PRODUCT
+        // PRODUCTS GET SINGEL PRODUCT
         app.get('/products/:id', async (req, res) => {
             const id = req.params.id;
             const query = {
@@ -61,13 +62,13 @@ async function run() {
             const product = await productsCollection.findOne(query);
             res.json(product);
         });
-        //POST API
+        // PRODUCTS POST API
         app.post('/products', async (req, res) => {
             const newProducts = req.body;
             const result = await productsCollection.insertOne(newProducts);
             res.json(result);
         });
-        // DELETE API
+        // PRODUCTS DELETE API
         app.delete('/products/:id', async (req, res) => {
             const id = req.params.id;
             const query = {
@@ -107,6 +108,27 @@ async function run() {
             const result = await announcementCollection.deleteOne(query);
             res.json(result);
         })
+        // GET API
+        app.get('/reports', async (req, res) => {
+            const cursor = reportCollection.find({});
+            const reports = await cursor.toArray();
+            res.send(reports);
+        });
+        //POST API
+        app.post('/reports', async (req, res) => {
+            const newReports = req.body;
+            const result = await reportCollection.insertOne(newReports);
+            res.json(result);
+        });
+        // DELETE API
+        app.delete('/reports/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = {
+                _id: ObjectId(id)
+            };
+            const result = await reportCollection.deleteOne(query);
+            res.json(result);
+        })
 
     } finally {
         // await client.close();
@@ -119,4 +141,4 @@ app.get('/', (req, res) => {
 });
 app.listen(port, () => {
     console.log('running server on port', port);
-})
+});
