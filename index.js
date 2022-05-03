@@ -80,7 +80,7 @@ async function run() {
 
 		// GET API
 		app.get('/announcements', async (req, res) => {
-			const cursor = announcementCollection.find({}).sort({ date: -1, });
+			const cursor = announcementCollection.find({}).sort({ date: -1 });
 			const announcements = await cursor.toArray();
 			res.send(announcements);
 		});
@@ -96,7 +96,6 @@ async function run() {
 		//POST API
 		app.post('/announcements', async (req, res) => {
 			const newAnnouncements = req.body;
-			console.log(newAnnouncements);
 			const result = await announcementCollection.insertOne(newAnnouncements);
 			res.json(result);
 		});
@@ -111,11 +110,10 @@ async function run() {
 		})
 		// GET API
 		app.get('/reports', async (req, res) => {
-			// var sort = {time: -1 };
-			const findReport = reportCollection.find({}).sort({ date: -1, });
+			const findReport = reportCollection.find({}).sort({ a: -1 });
 			const reports = await findReport.toArray();
 			res.send(reports);
-			res.json(reports);
+			// res.json(reports);
 		});
 		//POST API
 		app.post('/reports', async (req, res) => {
