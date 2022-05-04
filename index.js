@@ -78,13 +78,13 @@ async function run() {
             res.json(result);
         })
 
-        // GET API
+        // ANNOUNCEMENTS GET API
         app.get('/announcements', async (req, res) => {
-            const cursor = announcementCollection.find({}).sort( { a: -1 } );
+            const cursor = announcementCollection.find({}).sort( { date: -1 } );
             const announcements = await cursor.toArray();
             res.send(announcements);
         });
-        // GET SINGEL PRODUCT
+        // ANNOUNCEMENTS GET SINGEL PRODUCT
         app.get('/announcements/:id', async (req, res) => {
             const id = req.params.id;
             const query = {
@@ -93,13 +93,13 @@ async function run() {
             const announcement = await announcementCollection.findOne(query);
             res.json(announcement);
         });
-        //POST API
+        // ANNOUNCEMENTS POST API
         app.post('/announcements', async (req, res) => {
             const newAnnouncements = req.body;
             const result = await announcementCollection.insertOne(newAnnouncements);
             res.json(result);
         });
-        // DELETE API
+        // ANNOUNCEMENTS DELETE API
         app.delete('/announcements/:id', async (req, res) => {
             const id = req.params.id;
             const query = {
@@ -108,20 +108,20 @@ async function run() {
             const result = await announcementCollection.deleteOne(query);
             res.json(result);
         })
-        // GET API
+        // REPORTS GET API
         app.get('/reports', async (req, res) => {
-            const findReport = reportCollection.find({}).sort( { a: -1 } );
+            const findReport = reportCollection.find({}).sort( { date: -1 } );
             const reports = await findReport.toArray();
             res.send(reports);
             // res.json(reports);
         });
-        //POST API
+        // REPORTS POST API
         app.post('/reports', async (req, res) => {
             const newReports = req.body;
             const result = await reportCollection.insertOne(newReports);
             res.json(result);
         });
-        // DELETE API
+        // REPORTS DELETE API
         app.delete('/reports/:id', async (req, res) => {
             const id = req.params.id;
             const query = {
